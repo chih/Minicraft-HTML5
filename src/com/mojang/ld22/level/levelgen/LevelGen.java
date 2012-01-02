@@ -5,9 +5,16 @@ import java.util.Random;
 import com.mojang.ld22.level.tile.Tile;
 
 public class LevelGen {
-    private static final Random random = new Random();
     public double[] values;
     private int w, h;
+
+    private static double getRandomDouble() {
+        return Math.random();
+    }
+
+    private static int getRandomInt(int max) {
+        return (int)(Math.random()*max);
+    }
 
     public LevelGen(int w, int h, int featureSize) {
         this.w = w;
@@ -17,7 +24,7 @@ public class LevelGen {
 
         for (int y = 0; y < w; y += featureSize) {
             for (int x = 0; x < w; x += featureSize) {
-                setSample(x, y, random.nextFloat() * 2 - 1);
+                setSample(x, y, getRandomDouble() * 2 - 1);
             }
         }
 
@@ -33,7 +40,7 @@ public class LevelGen {
                     double c = sample(x, y + stepSize);
                     double d = sample(x + stepSize, y + stepSize);
 
-                    double e = (a + b + c + d) / 4.0 + (random.nextFloat() * 2 - 1) * stepSize * scale;
+                    double e = (a + b + c + d) / 4.0 + (getRandomDouble() * 2 - 1) * stepSize * scale;
                     setSample(x + halfStep, y + halfStep, e);
                 }
             }
@@ -46,8 +53,8 @@ public class LevelGen {
                     double e = sample(x + halfStep, y - halfStep);
                     double f = sample(x - halfStep, y + halfStep);
 
-                    double H = (a + b + d + e) / 4.0 + (random.nextFloat() * 2 - 1) * stepSize * scale * 0.5;
-                    double g = (a + c + d + f) / 4.0 + (random.nextFloat() * 2 - 1) * stepSize * scale * 0.5;
+                    double H = (a + b + d + e) / 4.0 + (getRandomDouble() * 2 - 1) * stepSize * scale * 0.5;
+                    double g = (a + c + d + f) / 4.0 + (getRandomDouble() * 2 - 1) * stepSize * scale * 0.5;
                     setSample(x + halfStep, y, H);
                     setSample(x, y + halfStep, g);
                 }
@@ -163,14 +170,14 @@ public class LevelGen {
         }
 
         for (int i = 0; i < w * h / 2800; i++) {
-            int xs = random.nextInt(w);
-            int ys = random.nextInt(h);
+            int xs = getRandomInt(w);
+            int ys = getRandomInt(h);
             for (int k = 0; k < 10; k++) {
-                int x = xs + random.nextInt(21) - 10;
-                int y = ys + random.nextInt(21) - 10;
+                int x = xs + getRandomInt(21) - 10;
+                int y = ys + getRandomInt(21) - 10;
                 for (int j = 0; j < 100; j++) {
-                    int xo = x + random.nextInt(5) - random.nextInt(5);
-                    int yo = y + random.nextInt(5) - random.nextInt(5);
+                    int xo = x + getRandomInt(5) - getRandomInt(5);
+                    int yo = y + getRandomInt(5) - getRandomInt(5);
                     for (int yy = yo - 1; yy <= yo + 1; yy++)
                         for (int xx = xo - 1; xx <= xo + 1; xx++)
                             if (xx >= 0 && yy >= 0 && xx < w && yy < h) {
@@ -183,15 +190,15 @@ public class LevelGen {
         }
 
         /*
-           * for (int i = 0; i < w * h / 2800; i++) { int xs = random.nextInt(w); int ys = random.nextInt(h); for (int k = 0; k < 10; k++) { int x = xs + random.nextInt(21) - 10; int y = ys + random.nextInt(21) - 10; for (int j = 0; j < 100; j++) { int xo = x + random.nextInt(5) - random.nextInt(5); int yo = y + random.nextInt(5) - random.nextInt(5); for (int yy = yo - 1; yy <= yo + 1; yy++) for (int xx = xo - 1; xx <= xo + 1; xx++) if (xx >= 0 && yy >= 0 && xx < w && yy < h) { if (map[xx + yy * w] == Tile.grass.id) { map[xx + yy * w] = Tile.dirt.id; } } } } }
+           * for (int i = 0; i < w * h / 2800; i++) { int xs = getRandomInt(w); int ys = getRandomInt(h); for (int k = 0; k < 10; k++) { int x = xs + getRandomInt(21) - 10; int y = ys + getRandomInt(21) - 10; for (int j = 0; j < 100; j++) { int xo = x + getRandomInt(5) - getRandomInt(5); int yo = y + getRandomInt(5) - getRandomInt(5); for (int yy = yo - 1; yy <= yo + 1; yy++) for (int xx = xo - 1; xx <= xo + 1; xx++) if (xx >= 0 && yy >= 0 && xx < w && yy < h) { if (map[xx + yy * w] == Tile.grass.id) { map[xx + yy * w] = Tile.dirt.id; } } } } }
            */
 
         for (int i = 0; i < w * h / 400; i++) {
-            int x = random.nextInt(w);
-            int y = random.nextInt(h);
+            int x = getRandomInt(w);
+            int y = getRandomInt(h);
             for (int j = 0; j < 200; j++) {
-                int xx = x + random.nextInt(15) - random.nextInt(15);
-                int yy = y + random.nextInt(15) - random.nextInt(15);
+                int xx = x + getRandomInt(15) - getRandomInt(15);
+                int yy = y + getRandomInt(15) - getRandomInt(15);
                 if (xx >= 0 && yy >= 0 && xx < w && yy < h) {
                     if (map[xx + yy * w] == Tile.grass.id) {
                         map[xx + yy * w] = Tile.tree.id;
@@ -201,24 +208,24 @@ public class LevelGen {
         }
 
         for (int i = 0; i < w * h / 400; i++) {
-            int x = random.nextInt(w);
-            int y = random.nextInt(h);
-            int col = random.nextInt(4);
+            int x = getRandomInt(w);
+            int y = getRandomInt(h);
+            int col = getRandomInt(4);
             for (int j = 0; j < 30; j++) {
-                int xx = x + random.nextInt(5) - random.nextInt(5);
-                int yy = y + random.nextInt(5) - random.nextInt(5);
+                int xx = x + getRandomInt(5) - getRandomInt(5);
+                int yy = y + getRandomInt(5) - getRandomInt(5);
                 if (xx >= 0 && yy >= 0 && xx < w && yy < h) {
                     if (map[xx + yy * w] == Tile.grass.id) {
                         map[xx + yy * w] = Tile.flower.id;
-                        data[xx + yy * w] = (byte) (col + random.nextInt(4) * 16);
+                        data[xx + yy * w] = (byte) (col + getRandomInt(4) * 16);
                     }
                 }
             }
         }
 
         for (int i = 0; i < w * h / 100; i++) {
-            int xx = random.nextInt(w);
-            int yy = random.nextInt(h);
+            int xx = getRandomInt(w);
+            int yy = getRandomInt(h);
             if (xx >= 0 && yy >= 0 && xx < w && yy < h) {
                 if (map[xx + yy * w] == Tile.sand.id) {
                     map[xx + yy * w] = Tile.cactus.id;
@@ -229,8 +236,8 @@ public class LevelGen {
         int count = 0;
         stairsLoop:
         for (int i = 0; i < w * h / 100; i++) {
-            int x = random.nextInt(w - 2) + 1;
-            int y = random.nextInt(h - 2) + 1;
+            int x = getRandomInt(w - 2) + 1;
+            int y = getRandomInt(h - 2) + 1;
 
             for (int yy = y - 1; yy <= y + 1; yy++)
                 for (int xx = x - 1; xx <= x + 1; xx++) {
@@ -303,11 +310,11 @@ public class LevelGen {
         {
             int r = 2;
             for (int i = 0; i < w * h / 400; i++) {
-                int x = random.nextInt(w);
-                int y = random.nextInt(h);
+                int x = getRandomInt(w);
+                int y = getRandomInt(h);
                 for (int j = 0; j < 30; j++) {
-                    int xx = x + random.nextInt(5) - random.nextInt(5);
-                    int yy = y + random.nextInt(5) - random.nextInt(5);
+                    int xx = x + getRandomInt(5) - getRandomInt(5);
+                    int yy = y + getRandomInt(5) - getRandomInt(5);
                     if (xx >= r && yy >= r && xx < w - r && yy < h - r) {
                         if (map[xx + yy * w] == Tile.rock.id) {
                             map[xx + yy * w] = (byte) ((Tile.ironOre.id & 0xff) + depth - 1);
@@ -321,8 +328,8 @@ public class LevelGen {
             int count = 0;
             stairsLoop:
             for (int i = 0; i < w * h / 100; i++) {
-                int x = random.nextInt(w - 20) + 10;
-                int y = random.nextInt(h - 20) + 10;
+                int x = getRandomInt(w - 20) + 10;
+                int y = getRandomInt(h - 20) + 10;
 
                 for (int yy = y - 1; yy <= y + 1; yy++)
                     for (int xx = x - 1; xx <= x + 1; xx++) {
@@ -370,8 +377,8 @@ public class LevelGen {
 
         stairsLoop:
         for (int i = 0; i < w * h / 50; i++) {
-            int x = random.nextInt(w - 2) + 1;
-            int y = random.nextInt(h - 2) + 1;
+            int x = getRandomInt(w - 2) + 1;
+            int y = getRandomInt(h - 2) + 1;
 
             for (int yy = y - 1; yy <= y + 1; yy++)
                 for (int xx = x - 1; xx <= x + 1; xx++) {
@@ -384,8 +391,8 @@ public class LevelGen {
         int count = 0;
         stairsLoop:
         for (int i = 0; i < w * h; i++) {
-            int x = random.nextInt(w - 2) + 1;
-            int y = random.nextInt(h - 2) + 1;
+            int x = getRandomInt(w - 2) + 1;
+            int y = getRandomInt(h - 2) + 1;
 
             for (int yy = y - 1; yy <= y + 1; yy++)
                 for (int xx = x - 1; xx <= x + 1; xx++) {
