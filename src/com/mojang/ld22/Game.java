@@ -231,6 +231,15 @@ public class Game extends Composite {
             unprocessed += (now - lastTime) / msPerTick;
             lastTime = now;
             boolean shouldRender = true;
+
+            if (isMobileBrowser) {
+                //hack - if iOS, closes the app, and comes back to it an hour later
+                //we want to avoid stalling and processing an hour worth of ticks
+                if (unprocessed > 60) {
+                    unprocessed = 60;
+                }
+            }
+
             while (unprocessed >= 1) {
                 ticks++;
                 tick();
