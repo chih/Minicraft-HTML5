@@ -1,0 +1,11 @@
+<module rename-to="Minicraft">
+    <inherits name='com.google.gwt.user.User'/>
+    <inherits name='com.allen_sauer.gwt.voices.gwt-voices'/>
+
+    <set-property name='user.agent' value='gecko1_8,ie9,safari,opera'/>
+
+    <source path='ld22'/>
+    <entry-point class='com.mojang.ld22.gwt.GwtMinicraftEntryPoint'/>
+
+<!--    <collapse-all-properties/>  -->
+</module>

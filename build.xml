@@ -1,0 +1,88 @@
+<project name="minicraft" default="gwt-build">
+    <property file="build.properties"/>
+
+    <property name="projectbase" value="."/>
+    <property name="deploydir" value="${projectbase}/out"/>
+
+    <!-- default if not set in build.properties -->
+    <property name="gwt.home" value="../gwt-2.4.0"/>
+    <property name="gwt.localWorkers" value="2"/>
+    <property name="gwt.draftCompile" value="no"/>
+
+    <path id="gwt-classpath.refid">
+        <pathelement path="${java.class.path}/"/>
+        <pathelement path="${gwt.home}/gwt-user.jar"/>
+        <pathelement path="${gwt.home}/gwt-dev.jar"/>
+        <pathelement path="${gwt.home}/validation-api-1.0.0.GA.jar"/>
+        <pathelement path="${gwt.home}/validation-api-1.0.0.GA-sources.jar"/> 
+        <pathelement path="${projectbase}/lib/gwt-voices-2.1.6.jar"/>
+    </path>
+
+    <property name="gwt-classpath" refid="gwt-classpath.refid"/>
+
+    <target name="gwt-js-compile2class">
+        <mkdir dir="${deploydir}/gwt-classes"/>
+        <javac destdir="${deploydir}/gwt-classes"
+               debug="on"
+               debuglevel="lines,vars,source"
+               encoding="utf-8">
+            <classpath>
+                <pathelement path="${gwt-classpath}"/>
+            </classpath>
+            <src path="${projectbase}/src"/>
+        </javac>
+    </target>
+
+    <target name="gwt-js-build" depends="gwt-js-compile2class">
+        <mkdir dir="${deploydir}/gwt-js-temp"/>
+        <mkdir dir="${deploydir}/gwt-js-gen"/>
+        <mkdir dir="${deploydir}/gwt-js-war"/>
+        <mkdir dir="${deploydir}/gwt-js-extra"/>
+
+        <condition property="gwtDraftCompileArg" value="-draftCompile" else="">
+            <istrue value="${gwt.draftCompile}"/>
+        </condition>
+
+
+        <!-- you must fork or it will fail -->
+        <java  classname="com.google.gwt.dev.Compiler" fork="true" failonerror="true">
+            <classpath>
+                <pathelement location="${projectbase}/src"/> 
+                <pathelement path="${gwt-classpath}"/>
+            </classpath>
+
+            <sysproperty key="java.awt.headless" value="true"/>
+            <arg line="${gwtDraftCompileArg}"/>
+            <arg value="-logLevel"/>
+            <arg value="INFO"/>
+            <arg value="-workDir"/>
+            <arg value="${deploydir}/gwt-js-temp"/>
+            <arg value="-gen"/>
+            <arg value="${deploydir}/gwt-js-gen"/>
+            <arg value="-war"/>
+            <arg value="${deploydir}/gwt-js-war"/>
+            <arg value="-extra"/>
+            <arg value="${deploydir}/gwt-js-extra"/>
+            <arg value="-localWorkers"/>
+            <arg value="${gwt.localWorkers}"/>
+            <arg value="-style"/>
+            <arg value="OBF"/>
+            <arg value="com.mojang.Minicraft"/>
+        </java>
+    </target>
+
+    <target name="gwt-clean">
+        <delete dir="${deploydir}"/>
+    </target>
+
+    <target name="gwt-build" depends="gwt-js-build">
+        <copy todir="${deploydir}/gwt-js-war">
+            <fileset dir="${projectbase}/war">
+            </fileset>
+        </copy>
+    </target>
+
+    <target name="gwt-cleanbuild" depends="gwt-clean, gwt-build">
+    </target>
+
+</project>
