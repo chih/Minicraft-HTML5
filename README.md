@@ -1,6 +1,10 @@
 Minicraft HTML5
 ===============
 
+**[Click here to play it](http://chih.github.com/Minicraft-HTML5/)**
+
+
+
 HTML5 Port of Minicraft, ported by Chi Hoang (chi@chi.ca)
 
 Minicraft was original created by Markus Persson (Notch)

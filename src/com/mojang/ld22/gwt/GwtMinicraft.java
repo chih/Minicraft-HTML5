@@ -47,11 +47,11 @@ public class GwtMinicraft {
         } else {
             fp.add(new HTML("<br><br><br><br>" +
                             "<center>" +
-                            "Minicraft HTML5" +
-                            "Originally written by Markus Persson<br>" +
-                            "Converted to HTML5 via GWT/Canvas by Chi Hoang (chi@chi.ca)" +
-                            "http://" +
-                            "</center>"))
+                            "Minicraft HTML5<br>" +
+                            "Minicraft was originally written by Markus Persson (Notch)<br>" +
+                            "Converted to HTML5 via GWT/Canvas by Chi Hoang (chi at chi.ca)<br>" +
+                            "<a href='http://github.com/chih/Minicraft-HTML5'>https://github.com/chih/Minicraft-HTML5</a><br>" +
+                            "</center>"));
         }
 
         RootPanel.get("loadingMsg").getElement().setInnerHTML("");
@@ -143,7 +143,7 @@ public class GwtMinicraft {
         });
 
         //title
-        Label title = new Label("Minicraft-Html5");
+        Label title = new Label("Minicraft HTML5");
         inner.add(title);
         inner.setCellHorizontalAlignment(title, HasHorizontalAlignment.ALIGN_CENTER);
 
