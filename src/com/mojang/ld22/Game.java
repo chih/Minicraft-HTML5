@@ -212,7 +212,7 @@ public class Game extends Composite {
         double msPerTick;
         int frames;
         int ticks;
-        long lastTimer1;
+        double lastTimer1;
 
         int scrollyTicks =0;
 
@@ -222,7 +222,7 @@ public class Game extends Composite {
             msPerTick = 1000.0 / 60;
             frames = 0;
             ticks = 0;
-            lastTimer1 = System.currentTimeMillis();
+            lastTimer1 = Duration.currentTimeMillis();
 
         }
 
@@ -253,7 +253,7 @@ public class Game extends Composite {
             }
 
             if (Duration.currentTimeMillis() - lastTimer1 > 1000) {
-                lastTimer1 += 1000;
+                lastTimer1 = Duration.currentTimeMillis();
                 if (statusWidget != null) {
                     statusWidget.setText(ticks + " ticks, " + frames + " fps");
                 }
