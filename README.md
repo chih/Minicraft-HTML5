@@ -1,7 +1,7 @@
 Minicraft HTML5
 ===============
 
-**[Click here to play it](http://chih.github.com/Minicraft-HTML5/)**
+**[Click here to play it](http://chih.github.io/Minicraft-HTML5/)**
 
 
 
